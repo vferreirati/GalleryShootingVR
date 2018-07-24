@@ -29,6 +29,18 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class UCameraComponent* CameraComp;
 
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	class UMotionControllerComponent* ControllerRight;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	class UMotionControllerComponent* ControllerLeft;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	class UStaticMeshComponent* ControllerMeshRight;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	class UStaticMeshComponent* ControllerMeshLeft;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

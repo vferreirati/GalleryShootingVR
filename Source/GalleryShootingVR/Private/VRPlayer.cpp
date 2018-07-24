@@ -4,6 +4,7 @@
 #include "Components/SceneComponent.h"
 #include "Camera/CameraComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
+#include "MotionControllerComponent.h"
 
 
 // Sets default values
@@ -17,6 +18,22 @@ AVRPlayer::AVRPlayer()
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	CameraComp->SetupAttachment(VRRoot);
+
+	ControllerRight = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerRight"));
+	ControllerRight->SetTrackingSource(EControllerHand::Right);
+	ControllerRight->SetupAttachment(VRRoot);
+
+	ControllerMeshRight = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ControllerMeshRight"));
+	ControllerMeshRight->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	ControllerMeshRight->SetupAttachment(ControllerRight);
+
+	ControllerLeft = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerLeft"));
+	ControllerLeft->SetTrackingSource(EControllerHand::Left);
+	ControllerLeft->SetupAttachment(VRRoot);
+
+	ControllerMeshLeft = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ControllerMeshLeft"));
+	ControllerMeshLeft->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	ControllerMeshLeft->SetupAttachment(ControllerLeft);
 }
 
 // Called when the game starts or when spawned
