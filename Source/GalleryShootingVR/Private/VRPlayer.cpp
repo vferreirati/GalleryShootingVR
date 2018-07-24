@@ -5,6 +5,8 @@
 #include "Camera/CameraComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "MotionControllerComponent.h"
+#include "Engine/World.h"
+#include "DrawDebugHelpers.h"
 
 
 // Sets default values
@@ -34,6 +36,11 @@ AVRPlayer::AVRPlayer()
 	ControllerMeshLeft = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ControllerMeshLeft"));
 	ControllerMeshLeft->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	ControllerMeshLeft->SetupAttachment(ControllerLeft);
+
+	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
+	MuzzleLocation->SetupAttachment(ControllerMeshRight);
+
+	GunRange = 1500;	// 1.5 Meters
 }
 
 // Called when the game starts or when spawned
@@ -56,5 +63,14 @@ void AVRPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AVRPlayer::Shoot);
 }
 
+void AVRPlayer::Shoot() {
+	FVector StartLocation = MuzzleLocation->GetComponentLocation();
+	FVector EndLocation = StartLocation + (MuzzleLocation->GetComponentRotation().Vector() * GunRange);
+	FHitResult HitResult;
+	bool bLineTraceHit = GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
+
+	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Yellow, false, 1, 0, 1);
+}

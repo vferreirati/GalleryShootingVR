@@ -41,9 +41,17 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class UStaticMeshComponent* ControllerMeshLeft;
 
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	class USceneComponent* MuzzleLocation;
+
+	// Range in cm's of the player gun
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float GunRange;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	
+	// Does a linetrace shoot
+	void Shoot();
 };
