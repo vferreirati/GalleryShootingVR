@@ -6,9 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "VRGameMode.generated.h"
 
-/**
- * 
- */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGameStateChangedSignature, bool, GameIsPlaying);
+
 UCLASS()
 class GALLERYSHOOTINGVR_API AVRGameMode : public AGameModeBase
 {
@@ -18,6 +17,12 @@ public:
 	AVRGameMode();
 
 	virtual void StartPlay() override;
+
+	void StartGame();
+
+	void QuitGame();
+
+	FOnGameStateChangedSignature OnGameStateChanged;
 	
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
@@ -34,4 +39,6 @@ protected:
 
 protected:
 	void SpawnEnemyWave();
+
+	void EndGame();
 };

@@ -27,6 +27,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// Resets the score back to 0
+	void ResetScore();
 
 protected:	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -69,9 +71,6 @@ protected:
 
 	// Adds or subtracts to player score
 	void AddToScore(int32 Value);
-
-	// Resets the score back to 0
-	void ResetScore();
 
 	// Plays the particle system at hit location
 	void PlayHitEffect(FVector Location);

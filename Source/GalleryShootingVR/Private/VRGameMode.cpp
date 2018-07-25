@@ -3,6 +3,7 @@
 #include "VRGameMode.h"
 #include "EnemySpawner.h"
 #include "Kismet/GameplayStatics.h"
+#include "VRPlayer.h"
 
 
 AVRGameMode::AVRGameMode() {
@@ -21,12 +22,35 @@ void AVRGameMode::StartPlay() {
 	// Get all EnemySpawners in the world.
 	UGameplayStatics::GetAllActorsOfClass(this, AEnemySpawner::StaticClass(), EnemySpawners);
 	
-	GetWorldTimerManager().SetTimer(TimerHandle_DelayBetweenWaves, this, &AVRGameMode::SpawnEnemyWave, DelayPerWave);
+}
+
+void AVRGameMode::StartGame() {
+	if (GetWorldTimerManager().IsTimerActive(TimerHandle_DelayBetweenWaves)) { return; }
+
+	if (AVRPlayer* Player = Cast<AVRPlayer>(UGameplayStatics::GetPlayerPawn(this, 0))) {
+		Player->ResetScore();
+		CurrentWaveNumber = 0;
+		GetWorldTimerManager().SetTimer(TimerHandle_DelayBetweenWaves, this, &AVRGameMode::SpawnEnemyWave, DelayPerWave);
+		OnGameStateChanged.Broadcast(true);
+	}
+}
+
+void AVRGameMode::EndGame() {
+	// Broadcast that the game ended (Toggle widget visibility)
+	OnGameStateChanged.Broadcast(false);
+}
+
+void AVRGameMode::QuitGame() {
+	GetWorld()->GetFirstPlayerController()->ConsoleCommand("Quit");
 }
 
 void AVRGameMode::SpawnEnemyWave() {
 
-	if (CurrentWaveNumber >= EnemiesPerWave.Num()) { return; }
+	// If reached total number of waves, end game
+	if (CurrentWaveNumber >= EnemiesPerWave.Num()) { 
+		EndGame(); 
+		return;
+	}
 
 	int32 EnemiesAmount = EnemiesPerWave[CurrentWaveNumber];
 

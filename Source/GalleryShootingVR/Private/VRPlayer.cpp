@@ -2,6 +2,7 @@
 
 #include "VRPlayer.h"
 #include "TargetEnemy.h"
+#include "InGameMenu.h"
 #include "Components/SceneComponent.h"
 #include "Camera/CameraComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
@@ -75,12 +76,17 @@ void AVRPlayer::Shoot() {
 	bool bLineTraceHit = GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
 
 	if (bLineTraceHit) {
+		PlayHitEffect(HitResult.ImpactPoint);
+		
 		if (ATargetEnemy* Enemy = Cast<ATargetEnemy>(HitResult.Actor)) {
 			Enemy->WasHit();
 			AddToScore(5);
+		
+		} else if(AInGameMenu* Menu = Cast<AInGameMenu>(HitResult.Actor)) {
+			Menu->InteractWithMenu(HitResult.GetComponent());
 		}
 
-		PlayHitEffect(HitResult.ImpactPoint);
+		
 	}
 }
 
@@ -97,4 +103,5 @@ void AVRPlayer::AddToScore(int32 Value) {
 
 void AVRPlayer::ResetScore() {
 	PlayerScore = 0;
+	OnScoreChanged.Broadcast(PlayerScore);	// Broadcast the event that our score changed
 }
