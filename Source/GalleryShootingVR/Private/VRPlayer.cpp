@@ -7,7 +7,7 @@
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "MotionControllerComponent.h"
 #include "Engine/World.h"
-#include "DrawDebugHelpers.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -74,13 +74,19 @@ void AVRPlayer::Shoot() {
 	FHitResult HitResult;
 	bool bLineTraceHit = GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
 
-	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Yellow, false, 1, 0, 1);
-
 	if (bLineTraceHit) {
 		if (ATargetEnemy* Enemy = Cast<ATargetEnemy>(HitResult.Actor)) {
 			Enemy->WasHit();
 			AddToScore(5);
 		}
+
+		PlayHitEffect(HitResult.ImpactPoint);
+	}
+}
+
+void AVRPlayer::PlayHitEffect(FVector Location) {
+	if (HitEffect) {
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitEffect, Location);
 	}
 }
 

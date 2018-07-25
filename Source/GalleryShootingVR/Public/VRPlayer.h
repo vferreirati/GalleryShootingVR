@@ -53,6 +53,9 @@ protected:
 	// Range in cm's of the player gun
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float GunRange;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	class UParticleSystem* HitEffect;
 
 	// Current score of the player
 	int32 PlayerScore;
@@ -69,4 +72,7 @@ protected:
 
 	// Resets the score back to 0
 	void ResetScore();
+
+	// Plays the particle system at hit location
+	void PlayHitEffect(FVector Location);
 };
