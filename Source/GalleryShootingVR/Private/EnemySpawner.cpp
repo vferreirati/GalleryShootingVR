@@ -18,9 +18,6 @@ AEnemySpawner::AEnemySpawner()
 void AEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	FTimerHandle TimerHandle_SpawnEnemyTimer;
-	GetWorldTimerManager().SetTimer(TimerHandle_SpawnEnemyTimer, this, &AEnemySpawner::SpawnEnemy, 3, true);
 }
 
 void AEnemySpawner::SpawnEnemy() {

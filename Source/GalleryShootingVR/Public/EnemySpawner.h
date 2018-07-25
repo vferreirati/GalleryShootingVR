@@ -15,6 +15,9 @@ public:
 	// Sets default values for this actor's properties
 	AEnemySpawner();
 
+	// Spawns a TargetEnemy
+	void SpawnEnemy();
+
 protected:	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class UBillboardComponent* BillboardComp;
@@ -25,6 +28,4 @@ protected:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
-	void SpawnEnemy();
 };
