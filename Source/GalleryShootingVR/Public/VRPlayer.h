@@ -48,10 +48,19 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float GunRange;
 
+	// Current score of the player
+	int32 PlayerScore;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	// Does a linetrace shoot
 	void Shoot();
+
+	// Adds or subtracts to player score
+	void AddToScore(int32 Value);
+
+	// Resets the score back to 0
+	void ResetScore();
 };

@@ -42,6 +42,7 @@ AVRPlayer::AVRPlayer()
 	MuzzleLocation->SetupAttachment(ControllerMeshRight);
 
 	GunRange = 1500;	// 1.5 Meters
+	PlayerScore = 0;
 }
 
 // Called when the game starts or when spawned
@@ -78,6 +79,15 @@ void AVRPlayer::Shoot() {
 	if (bLineTraceHit) {
 		if (ATargetEnemy* Enemy = Cast<ATargetEnemy>(HitResult.Actor)) {
 			Enemy->WasHit();
+			AddToScore(5);
 		}
 	}
+}
+
+void AVRPlayer::AddToScore(int32 Value) {
+	PlayerScore += Value;
+}
+
+void AVRPlayer::ResetScore() {
+	PlayerScore = 0;
 }
