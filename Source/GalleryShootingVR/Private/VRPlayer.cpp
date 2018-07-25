@@ -86,6 +86,7 @@ void AVRPlayer::Shoot() {
 
 void AVRPlayer::AddToScore(int32 Value) {
 	PlayerScore += Value;
+	OnScoreChanged.Broadcast(PlayerScore);	// Broadcast the event that our score changed
 }
 
 void AVRPlayer::ResetScore() {

@@ -6,10 +6,16 @@
 #include "GameFramework/Pawn.h"
 #include "VRPlayer.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScoreChangedSignature, int32, NewScore);
+
 UCLASS()
 class GALLERYSHOOTINGVR_API AVRPlayer : public APawn
 {
 	GENERATED_BODY()
+
+public:
+
+	FOnScoreChangedSignature OnScoreChanged;
 
 public:
 	// Sets default values for this pawn's properties
