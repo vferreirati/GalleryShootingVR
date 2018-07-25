@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "VRPlayer.h"
+#include "TargetEnemy.h"
 #include "Components/SceneComponent.h"
 #include "Camera/CameraComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
@@ -73,4 +74,10 @@ void AVRPlayer::Shoot() {
 	bool bLineTraceHit = GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
 
 	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Yellow, false, 1, 0, 1);
+
+	if (bLineTraceHit) {
+		if (ATargetEnemy* Enemy = Cast<ATargetEnemy>(HitResult.Actor)) {
+			Enemy->WasHit();
+		}
+	}
 }

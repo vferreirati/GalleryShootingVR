@@ -28,3 +28,6 @@ void ATargetEnemy::Tick(float DeltaTime)
 
 }
 
+void ATargetEnemy::WasHit() {
+	Destroy();
+}
