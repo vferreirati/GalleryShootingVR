@@ -4,7 +4,7 @@ Gallery Shooting VR is a Unreal Engine 4 Wave based Target Shooting made with ‚ù
 It's was done following Mathew Wadstein's VR tutorials on creating a Minimum Viable Product for a VR Game from scratch and 
 converting the source code to C++.
 
-![](https://media.giphy.com/media/OOSp4IMMmus8prcyAe/giphy.gif)
+![Gameplay](https://media.giphy.com/media/OOSp4IMMmus8prcyAe/giphy.gif)
 
 # Features!
 
