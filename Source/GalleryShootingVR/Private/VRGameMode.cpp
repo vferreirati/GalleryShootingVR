@@ -30,8 +30,8 @@ void AVRGameMode::StartGame() {
 	if (AVRPlayer* Player = Cast<AVRPlayer>(UGameplayStatics::GetPlayerPawn(this, 0))) {
 		Player->ResetScore();
 		CurrentWaveNumber = 0;
-		GetWorldTimerManager().SetTimer(TimerHandle_DelayBetweenWaves, this, &AVRGameMode::SpawnEnemyWave, DelayPerWave);
 		OnGameStateChanged.Broadcast(true);
+		PrepareForNewWave();
 	}
 }
 
@@ -44,14 +44,18 @@ void AVRGameMode::QuitGame() {
 	GetWorld()->GetFirstPlayerController()->ConsoleCommand("Quit");
 }
 
-void AVRGameMode::SpawnEnemyWave() {
-
+void AVRGameMode::PrepareForNewWave() {
 	// If reached total number of waves, end game
-	if (CurrentWaveNumber >= EnemiesPerWave.Num()) { 
-		EndGame(); 
+	if (CurrentWaveNumber >= EnemiesPerWave.Num()) {
+		EndGame();
 		return;
 	}
 
+	FlashFloor();	
+	GetWorldTimerManager().SetTimer(TimerHandle_DelayBetweenWaves, this, &AVRGameMode::SpawnEnemyWave, DelayPerWave);
+}
+
+void AVRGameMode::SpawnEnemyWave() {
 	int32 EnemiesAmount = EnemiesPerWave[CurrentWaveNumber];
 
 	for (int32 i = 0; i < EnemiesAmount; i++) {
@@ -62,5 +66,5 @@ void AVRGameMode::SpawnEnemyWave() {
 	}
 
 	CurrentWaveNumber++;
-	GetWorldTimerManager().SetTimer(TimerHandle_DelayBetweenWaves, this, &AVRGameMode::SpawnEnemyWave, DelayPerWave);
+	GetWorldTimerManager().SetTimer(TimerHandle_DelayBetweenWaves, this, &AVRGameMode::PrepareForNewWave, 10);
 }

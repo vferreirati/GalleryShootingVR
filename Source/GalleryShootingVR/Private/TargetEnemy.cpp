@@ -27,6 +27,7 @@ void ATargetEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	SetLifeSpan(15);
 }
 
 // Called every frame

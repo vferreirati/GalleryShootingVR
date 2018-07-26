@@ -47,15 +47,3 @@ void AInGameMenu::InteractWithMenu(class UPrimitiveComponent* HitComp) {
 		GameMode->QuitGame();
 	}
 }
-
-void AInGameMenu::ToggleMenu(bool IsGamePlaying) {
-	if (IsGamePlaying) {
-		WidgetComp->SetVisibility(false);
-		StartBoxComp->SetCollisionProfileName("NoCollision");
-		EndBoxComp->SetCollisionProfileName("NoCollision");
-	} else {
-		WidgetComp->SetVisibility(true);
-		StartBoxComp->SetCollisionProfileName("UI");
-		EndBoxComp->SetCollisionProfileName("UI");
-	}
-}

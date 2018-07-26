@@ -18,7 +18,7 @@ public:
 	void InteractWithMenu(class UPrimitiveComponent* HitComp);
 
 protected:
-	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	class UWidgetComponent* WidgetComp;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -33,6 +33,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
-	UFUNCTION()
+	UFUNCTION(BlueprintImplementableEvent, Category = "InGameMenu")
 	void ToggleMenu(bool IsGamePlaying);
 };

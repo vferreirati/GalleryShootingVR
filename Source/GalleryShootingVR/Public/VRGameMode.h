@@ -38,6 +38,12 @@ protected:
 	FTimerHandle TimerHandle_DelayBetweenWaves;
 
 protected:
+	void PrepareForNewWave();
+
+	// Flashes the floor green to inform that a new wave is coming
+	UFUNCTION(BlueprintImplementableEvent, Category = "VRGameMode")
+	void FlashFloor();
+
 	void SpawnEnemyWave();
 
 	void EndGame();
